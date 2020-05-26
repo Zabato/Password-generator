@@ -1,34 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Password Generator</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Password Generator</h1>
-      </header>
-      <div class="card">
-        <div class="card-header">
-          <h2>Generate a Password</h2>
-        </div>
-        <div class="card-body">
-          <textarea
-            readonly
-            id="password"
-            placeholder="Your Secure Password"
-            aria-label="Generated Password"
-          ></textarea>
-        </div>
-        <div class="card-footer">
-          <button id="generate" class="btn">Generate Password</button>
-        </div>
-      </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+// Assignment Code
+var generateBtn = document.querySelector("#generate");
+
+// Write password to the #password input
+function generate() {
+  var questions = [
+    {
+        prompt: "Do you want Uppercase letters?",
+        valstir: "ABCDEFGHIJKLMNOPQRSTUVWZYZ"
+    },
+    {
+        prompt: "Do you want Lowercase letters?",
+        valstir: "abcdefghijklmnopqrstuvwxyz",
+    },
+    {
+        prompt: "Do you want Numbers?",
+        valstir: "1234567890",
+    },
+    {
+        prompt: "Do you wnat special characters?",
+        valstir: "!@#$%^&*()_+",
+    },
+    ]
+   
+ var values = "";
+ var validResponse = false;
+  for(var i=0; i < questions.length; i++){
+      var response = window.confirm(questions[i].prompt); 
+      if (response){
+          values = values + questions[i].valstir; 
+          validResponse = true;
+      }
+  }
+  if (!validResponse){
+    alert("please choose at least 1");
+
+    return;
+  }
+  var length = window.prompt("how many characters?");
+
+  var password = "";
+  var passwordText = document.querySelector("#password");
+ 
+  if (length < 8 || length > 128){
+    alert("invalid. try again");
+    return; 
+}
+  for(var i = 0; i < length; i++){
+    password = password + values.charAt(Math.floor(Math.random() * Math.floor(values.length - 1)));
+}
+
+  passwordText.value = password;
+
+}
+
+// Add event listener to generate button
+document.getElementById("generate").addEventListener("click", generate);
